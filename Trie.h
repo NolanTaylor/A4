@@ -1,7 +1,7 @@
 /**
  * Nolan Taylor
- * CS 3505 Assignment 03
- * A Trie and Rule-of-Three
+ * CS 3505 Assignment 04
+ * Refactoring and Testing
  * 
  * The header class for Trie, structures
  * all the functions for Trie and Node

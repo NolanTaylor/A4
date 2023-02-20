@@ -1,7 +1,7 @@
 /**
  * Nolan Taylor
- * CS 3505 Assignment 03
- * A Trie and Rule-of-Three
+ * CS 3505 Assignment 04
+ * Refactoring and Testing
  * 
  * The implementation class for Trie, a graph that
  * connects nodes for the 26 lower case letters of
@@ -82,30 +82,30 @@ void Trie::Node::copyOnto(Node* copy) {
  * Get all the words from the node starting with
  * a prefix string.
 */
-std::vector<std::string> Trie::Node::getPrefixWords(std::vector<std::string>* words, std::string prefix, std::string string) {
-    if (prefix.length() == 0) {
+std::vector<std::string> Trie::Node::getPrefixWords(std::vector<std::string>* wordsStartingWithPrefixList, std::string paredPrefix, std::string prefixPlusBranches) {
+    if (paredPrefix.length() == 0) {
         // when the prefix has been pared down, loop through
         // the rest of the nodes and get all the possible
         // words from there
         for (auto const& [key, val] : map) {
-            std::string word = string + key;
+            std::string word = prefixPlusBranches + key;
 
             if (map[key].getWordFlag()) {
-                words->push_back(word);
+                wordsStartingWithPrefixList->push_back(word);
             }
 
-            map[key].getPrefixWords(words, prefix, word);
+            map[key].getPrefixWords(wordsStartingWithPrefixList, paredPrefix, prefixPlusBranches);
         }
     }
     else {
         // if the array has the first character of prefix, then
         // call the function again without the first character
-        if (map.count(prefix[0])) {
-            map[prefix[0]].getPrefixWords(words, prefix.substr(1), string);
+        if (map.count(paredPrefix[0])) {
+            map[paredPrefix[0]].getPrefixWords(wordsStartingWithPrefixList, paredPrefix.substr(1), prefixPlusBranches);
         }
     }
 
-    return *words;
+    return *wordsStartingWithPrefixList;
 }
 
 /**

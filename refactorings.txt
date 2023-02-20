@@ -1,0 +1,31 @@
+/**
+ * Nolan Taylor
+ * CS 3505 Assignment 04
+ * Refactoring and Testing
+*/
+
+One of the ways I refactored the code was by changing the
+way the functions addAWord and isAWord got information from
+the branches in the map. Previously, both functions would
+call getBranch on the character it was looking for and checked
+if that character branch landed on a nullptr. However,
+the new map that replaced the pointer array doesn't contain
+pointers to nodes, but instead node objects. So calling
+getBranch on a new character would create a default
+constructed node in the map with that character, leading
+to a messy trie. To clean this up, I added a hasBranch
+function that uses the map's count function to check if
+a branch already exists.
+
+Another way I refactored the code was by changing some
+variable and argument names. Making them more coherent
+as to what they actually perform in their respective
+functions. The arguments in the recursive function,
+getPrefixWords, for example worked fine for what
+they did on the first loop. But subsequent calls to
+the function meant the arguments didn't accurately
+describe what values they held. The very vague argument
+"string" was changed to "prefixPlusBranches" to show
+that it was the orginal prefix passed that got
+characters added onto it as it traversed down the
+branches of the map.

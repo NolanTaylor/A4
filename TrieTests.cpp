@@ -1,3 +1,12 @@
+/**
+ * Nolan Taylor
+ * CS 3505 Assignment 04
+ * Refactoring and Testing
+ * 
+ * The testing code for the Trie class.
+ * Checks to make sure everything works properly.
+*/
+
 #include "gtest/gtest.h"
 #include "Trie.h"
 #include <vector>
