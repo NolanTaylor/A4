@@ -29,3 +29,8 @@ describe what values they held. The very vague argument
 that it was the orginal prefix passed that got
 characters added onto it as it traversed down the
 branches of the map.
+
+(also, apparently vscode didn't connect to the correct
+github, and i couldn't figure out how to transfer this
+repository with all its commit history. so i'm uploading
+this one, hope that's okay)
