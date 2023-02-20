@@ -109,7 +109,7 @@ TEST(TrieTest, EqualOperator) {
     t->addAWord("yee");
     t->addAWord("haw");
 
-    *r = *t;
+    r = t;
 
     ASSERT_TRUE(r->isAWord("yee"));
     ASSERT_TRUE(r->isAWord("haw"));

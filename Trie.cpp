@@ -28,8 +28,8 @@ Trie::Node::Node() {
  * at the given character a-z.
 */
 void Trie::Node::addBranch(char ch) {
-    // convert ASCII code to 0-26
-    array[(int) ch - 97] = new Node;
+    Trie::Node node;
+    map.emplace(ch, node);
 }
 
 /**
@@ -37,7 +37,7 @@ void Trie::Node::addBranch(char ch) {
  * given character a-z.
 */
 Trie::Node* Trie::Node::getBranch(char ch) {
-    return array[(int) ch - 97];
+    return &map[ch];
 }
 
 /**
@@ -59,13 +59,10 @@ bool Trie::Node::getWordFlag() {
  * nodes as well.
 */
 void Trie::Node::selfDestruct() {
-    for (int i = 0; i < 26; i++) {
-        if (array[i] != nullptr) {
-            array[i]->selfDestruct();
-        }
+    for (auto const& [key, val] : map) {
+        map[key].selfDestruct();
 
-        delete array[i];
-        array[i] = nullptr;
+        delete &map[key];
     }
 }
 
@@ -74,12 +71,11 @@ void Trie::Node::selfDestruct() {
  * the given node.
 */
 void Trie::Node::copyOnto(Node* copy) {
-    for (int i = 0; i < 26; i++) {
-        if (array[i] != nullptr) {
-            copy->array[i] = new Node;
-            copy->array[i]->isWord = array[i]->isWord;
-            array[i]->copyOnto(copy->array[i]);
-        }
+    for (auto const& [key, val] : map) {
+        Trie::Node node;
+        copy->map.emplace(key, node);
+        copy->map[key].isWord = map[key].isWord;
+        map[key].copyOnto(&copy->map[key]);
     }
 }
 
@@ -92,24 +88,21 @@ std::vector<std::string> Trie::Node::getPrefixWords(std::vector<std::string>* wo
         // when the prefix has been pared down, loop through
         // the rest of the nodes and get all the possible
         // words from there
-        for (int i = 0; i < 26; i++) {
-            if (array[i] != nullptr) {
-                char ch = i + 97;
-                std::string word = string + ch;
+        for (auto const& [key, val] : map) {
+            std::string word = string + key;
 
-                if (array[i]->getWordFlag()) {
-                    words->push_back(word);
-                }
-
-                array[i]->getPrefixWords(words, prefix, word);
+            if (map[key].getWordFlag()) {
+                words->push_back(word);
             }
+
+            map[key].getPrefixWords(words, prefix, word);
         }
     }
     else {
         // if the array has the first character of prefix, then
         // call the function again without the first character
-        if (array[prefix[0] - 97] != nullptr) {
-            array[prefix[0] - 97]->getPrefixWords(words, prefix.substr(1), string);
+        if (map.count(prefix[0])) {
+            map[prefix[0]].getPrefixWords(words, prefix.substr(1), string);
         }
     }
 

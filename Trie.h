@@ -12,12 +12,14 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 class Trie {
 private:
     class Node {
     private:
         Node *array[26];
+        std::map<char, Node> map;
         bool isWord;
 
     public:
