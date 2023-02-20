@@ -13,13 +13,8 @@
 
 /**
  * Constructor for a Node object in the Trie.
- * Initializes the array to point at nullptr.
 */
 Trie::Node::Node() {
-    for (int i = 0; i < 26; i++) {
-        array[i] = nullptr;
-    }
-
     isWord = false;
 }
 
@@ -38,6 +33,10 @@ void Trie::Node::addBranch(char ch) {
 */
 Trie::Node* Trie::Node::getBranch(char ch) {
     return &map[ch];
+}
+
+bool Trie::Node::hasBranch(char ch) {
+    return map.count(ch);
 }
 
 /**
@@ -156,7 +155,7 @@ void Trie::addAWord(std::string string) {
     // loop through all the letters, adding a branch
     // if they don't exist
     for(int i = 0; i < string.length(); i++) {
-        if (current->getBranch(string[i]) == nullptr) {
+        if (!current->hasBranch(string[i])) {
             current->addBranch(string[i]);
         }
 
@@ -179,7 +178,7 @@ bool Trie::isAWord(std::string string) {
 
     // loop through all the letters to make sure the branches exist
     for (int i = 0; i < string.length(); i++) {
-        if (current->getBranch(string[i]) == nullptr) {
+        if (!current->hasBranch(string[i])) {
             return false;
         }
         else {

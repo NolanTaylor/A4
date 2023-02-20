@@ -18,7 +18,6 @@ class Trie {
 private:
     class Node {
     private:
-        Node *array[26];
         std::map<char, Node> map;
         bool isWord;
 
@@ -28,6 +27,8 @@ private:
         void addBranch(char);
 
         Node* getBranch(char);
+
+        bool hasBranch(char);
 
         void setWordFlag(bool);
 
