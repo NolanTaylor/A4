@@ -94,7 +94,7 @@ std::vector<std::string> Trie::Node::getPrefixWords(std::vector<std::string>* wo
                 wordsStartingWithPrefixList->push_back(word);
             }
 
-            map[key].getPrefixWords(wordsStartingWithPrefixList, paredPrefix, word);
+            map[key].getPrefixWords(wordsStartingWithPrefixList, paredPrefix, prefixPlusBranches);
         }
     }
     else {
